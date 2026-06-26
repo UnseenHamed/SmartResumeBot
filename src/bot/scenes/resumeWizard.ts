@@ -46,6 +46,13 @@ export const resumeScene = new Scenes.BaseScene<MyContext>('resumeWizard');
 // ── Enter ──
 
 resumeScene.enter(async (ctx) => {
+  const oldState = (ctx.session as any).rs as ResumeState | undefined;
+  if (oldState?.mainMessageId) {
+    try {
+      await ctx.telegram.deleteMessage(ctx.chat!.id, oldState.mainMessageId);
+    } catch (e) {} // ignore if already deleted
+  }
+
   const state = initState();
   (ctx.session as any).rs = state;
 
@@ -157,25 +164,20 @@ resumeScene.action('generate_pdf', async (ctx) => {
 
 // Restart
 resumeScene.action('restart', async (ctx) => {
-  await ctx.answerCbQuery();
+  await ctx.answerCbQuery('شروع مجدد...');
+  const oldMsgId = ((ctx.session as any).rs as ResumeState)?.mainMessageId;
   const state = initState();
+  state.mainMessageId = oldMsgId;
   (ctx.session as any).rs = state;
-  const { text, keyboard } = buildMessage(state, ctx.from?.first_name);
-  const chatId = ctx.chat!.id;
-  try {
-    await ctx.telegram.editMessageText(chatId, ((ctx.session as any).rs_old_msg || 0), undefined, '🗑 حذف شد.', { parse_mode: 'HTML' });
-  } catch {}
-  const msg = await ctx.telegram.sendMessage(chatId, text, { parse_mode: 'HTML', reply_markup: keyboard });
-  state.mainMessageId = msg.message_id;
+  await updateMsg(ctx);
 });
 
 // Cancel
 resumeScene.action('cancel', async (ctx) => {
   await ctx.answerCbQuery();
+  const oldMsgId = ((ctx.session as any).rs as ResumeState)?.mainMessageId;
   const state = initState();
+  state.mainMessageId = oldMsgId;
   (ctx.session as any).rs = state;
-  const { text, keyboard } = buildMessage(state, ctx.from?.first_name);
-  try {
-    await ctx.editMessageText(text, { parse_mode: 'HTML', reply_markup: keyboard });
-  } catch {}
+  await updateMsg(ctx);
 });
