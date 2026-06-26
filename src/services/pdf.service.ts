@@ -13,11 +13,14 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
   // Launch Puppeteer (with args for running on servers like Render)
   const browser = await puppeteer.launch({
     headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
-      '--disable-gpu'
+      '--disable-gpu',
+      '--no-zygote',
+      '--single-process'
     ]
   });
 
@@ -25,8 +28,8 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
   
   // Set content
   await page.setContent(html, {
-    waitUntil: ['networkidle0', 'domcontentloaded'] as any,
-    timeout: 30000
+    waitUntil: 'networkidle2',
+    timeout: 60000
   });
 
   // Inject script to ensure fonts are loaded
