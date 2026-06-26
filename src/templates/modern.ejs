@@ -152,37 +152,32 @@
       
       <% if (data.email) { %>
       <div class="contact-info">
-        <strong><%= data.language === 'en' ? 'Email' : 'ایمیل' %></strong>
+        <strong><i class="fa-solid fa-envelope"></i> <%= data.language === 'en' ? 'Email' : 'ایمیل' %></strong>
         <%= data.email %>
       </div>
       <% } %>
       
       <% if (data.phone) { %>
       <div class="contact-info">
-        <strong><%= data.language === 'en' ? 'Phone' : 'تلفن' %></strong>
+        <strong><i class="fa-solid fa-phone"></i> <%= data.language === 'en' ? 'Phone' : 'تلفن' %></strong>
         <span dir="ltr"><%= data.phone %></span>
       </div>
       <% } %>
       
       <% if (data.location) { %>
       <div class="contact-info">
-        <strong><%= data.language === 'en' ? 'Location' : 'موقعیت' %></strong>
+        <strong><i class="fa-solid fa-location-dot"></i> <%= data.language === 'en' ? 'Location' : 'موقعیت' %></strong>
         <%= data.location %>
       </div>
       <% } %>
       
-      <% if (data.linkedin) { %>
-      <div class="contact-info">
-        <strong>LinkedIn</strong>
-        <%= data.linkedin %>
-      </div>
-      <% } %>
-      
-      <% if (data.github) { %>
-      <div class="contact-info">
-        <strong>GitHub / Portfolio</strong>
-        <%= data.github %>
-      </div>
+      <% if (data.socialLinks && data.socialLinks.length > 0) { %>
+        <% data.socialLinks.forEach(link => { %>
+        <div class="contact-info">
+          <strong><i class="fa-brands fa-<%= link.name.toLowerCase() %>"></i> <%= link.name %></strong>
+          <%= link.url %>
+        </div>
+        <% }) %>
       <% } %>
 
       <!-- Skills -->

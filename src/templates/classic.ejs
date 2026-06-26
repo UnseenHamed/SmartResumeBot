@@ -112,9 +112,12 @@
       <h1><%= data.fullName %></h1>
       <h2><%= data.jobTitle %></h2>
       <div class="contact-info">
-        <% if (data.email) { %><span><%= data.email %></span><% } %>
-        <% if (data.phone) { %><span>• <span dir="ltr"><%= data.phone %></span></span><% } %>
-        <% if (data.location) { %><span>• <%= data.location %></span><% } %>
+        <% if (data.email) { %><span><i class="fa-solid fa-envelope"></i> <%= data.email %></span><% } %>
+        <% if (data.phone) { %><span>• <i class="fa-solid fa-phone"></i> <span dir="ltr"><%= data.phone %></span></span><% } %>
+        <% if (data.location) { %><span>• <i class="fa-solid fa-location-dot"></i> <%= data.location %></span><% } %>
+        <% if (data.socialLinks && data.socialLinks.length > 0) { data.socialLinks.forEach(link => { %>
+          <span>• <i class="fa-brands fa-<%= link.name.toLowerCase() %>"></i> <%= link.url %></span>
+        <% }) } %>
       </div>
     </div>
 
