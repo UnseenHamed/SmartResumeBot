@@ -65,11 +65,17 @@ resumeScene.enter(async (ctx) => {
 
 import { processResumeText } from '../../services/ai.service';
 
+resumeScene.command('start', async (ctx) => {
+  await ctx.scene.reenter();
+});
+
 resumeScene.on('text', async (ctx) => {
+  const input = ctx.message.text.trim();
+  if (input.startsWith('/')) return; // Ignore commands
+
   const state: ResumeState = (ctx.session as any).rs;
   if (!state) return;
 
-  const input = ctx.message.text.trim();
   try { await ctx.deleteMessage(); } catch {}
 
   if (state.section === 'ai_chat') {

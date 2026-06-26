@@ -71,22 +71,31 @@ Return EXACTLY a JSON object matching this schema:
 }
 `;
 
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemma-4-31b-it',
-      contents: prompt,
-    });
-    
-    if (response.text) {
-      // Clean up markdown block if model wraps JSON in ```json ... ```
-      let text = response.text.trim();
-      if (text.startsWith('```json')) text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-      else if (text.startsWith('```')) text = text.replace(/```/g, '').trim();
-      return JSON.parse(text);
+  const MAX_RETRIES = 3;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await ai.models.generateContent({
+        model: 'gemma-4-31b-it',
+        contents: prompt,
+      });
+      
+      if (response.text) {
+        // Clean up markdown block if model wraps JSON in ```json ... ```
+        let text = response.text.trim();
+        if (text.startsWith('```json')) text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        else if (text.startsWith('```')) text = text.replace(/```/g, '').trim();
+        return JSON.parse(text);
+      }
+      throw new Error('Empty AI response');
+    } catch (error: any) {
+      console.error(`AI attempt ${attempt}/${MAX_RETRIES} failed:`, error?.message || error);
+      if (attempt < MAX_RETRIES && (error?.status === 500 || error?.status === 503 || error?.message?.includes('INTERNAL'))) {
+        // Wait before retry (exponential backoff: 2s, 4s)
+        await new Promise(r => setTimeout(r, attempt * 2000));
+        continue;
+      }
+      throw error;
     }
-    throw new Error('Empty AI response');
-  } catch (error: any) {
-    console.error('Error processing resume text:', error);
-    throw error;
   }
+  throw new Error('All AI retries exhausted');
 }
