@@ -27,7 +27,7 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
   
   // Set content
   await page.setContent(html, {
-    waitUntil: 'networkidle2' as any,
+    waitUntil: 'domcontentloaded',
     timeout: 60000
   });
 
