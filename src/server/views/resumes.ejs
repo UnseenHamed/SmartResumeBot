@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">لیست رزومه‌ها</h1>
+
+<div class="glass-card">
+  <table>
+    <thead>
+      <tr>
+        <th>آیدی تلگرام</th>
+        <th>نام در رزومه</th>
+        <th>زبان</th>
+        <th>قالب</th>
+        <th>تعداد خروجی (PDF)</th>
+        <th>تاریخ ایجاد</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (resumes && resumes.length > 0) { %>
+        <% resumes.forEach(res => { %>
+          <tr>
+            <td dir="ltr"><%= res.user.telegramId %></td>
+            <td><%= res.fullName || '---' %></td>
+            <td><span class="badge"><%= res.language %></span></td>
+            <td><span class="badge"><%= res.templateName %></span></td>
+            <td><%= res.generatedCount %> بار</td>
+            <td><%= new Date(res.createdAt).toLocaleDateString('fa-IR') %></td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr><td colspan="6" style="text-align: center;">هیچ رزومه‌ای یافت نشد.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('partials/footer') %>

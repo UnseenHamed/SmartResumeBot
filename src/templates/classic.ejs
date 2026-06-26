@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="<%= data.language === 'en' ? 'en' : 'fa' %>">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume - Classic</title>
+  <%- include('styles') %>
+  <style>
+    .classic-resume {
+      padding: 50px;
+      max-width: 210mm;
+      margin: auto;
+      font-family: var(--font-en-heading);
+    }
+    
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #333;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .header h1 {
+      font-size: 36px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #222;
+    }
+    
+    .header h2 {
+      font-size: 18px;
+      font-weight: normal;
+      margin: 10px 0;
+      color: #555;
+    }
+    
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 13px;
+      color: #444;
+      flex-wrap: wrap;
+    }
+    
+    .section {
+      margin-bottom: 25px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      color: #111;
+      font-weight: 600;
+    }
+
+    .item {
+      margin-bottom: 15px;
+    }
+    
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    
+    .item-title {
+      font-weight: bold;
+      font-size: 15px;
+      margin: 0;
+    }
+    
+    .item-subtitle {
+      font-style: italic;
+      color: #555;
+      margin: 2px 0;
+      font-size: 14px;
+    }
+    
+    .item-date {
+      font-size: 13px;
+      color: #666;
+    }
+    
+    .item-desc {
+      margin-top: 5px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .skills-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .skill-category {
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    body.lang-fa .classic-resume {
+      font-family: var(--font-fa);
+    }
+  </style>
+</head>
+<body class="lang-<%= data.language %>">
+  <div class="page classic-resume">
+    <div class="header">
+      <h1><%= data.fullName %></h1>
+      <h2><%= data.jobTitle %></h2>
+      <div class="contact-info">
+        <% if (data.email) { %><span><%= data.email %></span><% } %>
+        <% if (data.phone) { %><span>• <span dir="ltr"><%= data.phone %></span></span><% } %>
+        <% if (data.location) { %><span>• <%= data.location %></span><% } %>
+      </div>
+    </div>
+
+    <% if (data.summary) { %>
+    <div class="section">
+      <h3 class="section-title"><%= data.language === 'en' ? 'Professional Summary' : 'خلاصه حرفه‌ای' %></h3>
+      <p class="item-desc"><%= data.summary %></p>
+    </div>
+    <% } %>
+
+    <% if (data.experience && data.experience.length > 0) { %>
+    <div class="section">
+      <h3 class="section-title"><%= data.language === 'en' ? 'Professional Experience' : 'سوابق کاری' %></h3>
+      <% data.experience.forEach(exp => { %>
+        <div class="item">
+          <div class="item-header">
+            <p class="item-title"><%= exp.title %> - <%= exp.company %></p>
+            <span class="item-date"><%= exp.date %></span>
+          </div>
+          <ul class="item-desc">
+            <% exp.descriptions.forEach(desc => { %><li><%= desc %></li><% }) %>
+          </ul>
+        </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <% if (data.education && data.education.length > 0) { %>
+    <div class="section">
+      <h3 class="section-title"><%= data.language === 'en' ? 'Education' : 'تحصیلات' %></h3>
+      <% data.education.forEach(edu => { %>
+        <div class="item">
+          <div class="item-header">
+            <p class="item-title"><%= edu.degree %> - <%= edu.university %></p>
+            <span class="item-date"><%= edu.date %></span>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <% if (data.skills && data.skills.length > 0) { %>
+    <div class="section">
+      <h3 class="section-title"><%= data.language === 'en' ? 'Skills' : 'مهارت‌ها' %></h3>
+      <div class="skills-list">
+        <% data.skills.forEach(skillGroup => { %>
+          <div>
+            <span class="skill-category"><%= skillGroup.category %>:</span>
+            <span class="item-desc"><%= skillGroup.items.join(', ') %></span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartResume - Admin Login</title>
+  
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --text-light: #f8fafc;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: 'Vazirmatn', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 40%);
+    }
+
+    .login-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-card h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-card p {
+      color: #94a3b8;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      text-align: right;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      color: white;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .error-msg {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h1>SmartResume</h1>
+    <p>ورود به پنل مدیریت ربات</p>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="error-msg"><%= error %></div>
+    <% } %>
+
+    <form action="/admin/login" method="POST">
+      <div class="input-group">
+        <input type="password" name="password" placeholder="رمز عبور..." required>
+      </div>
+      <button type="submit" class="btn">ورود</button>
+    </form>
+  </div>
+</body>
+</html>

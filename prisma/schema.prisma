@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  telegramId    BigInt    @unique
+  username      String?
+  firstName     String?
+  lastName      String?
+  language      String    @default("fa")  // fa | en
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  resumes       Resume[]
+}
+
+model Resume {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  user            User      @relation(fields: [userId], references: [id])
+  language        String    @default("en")
+  templateName    String    @default("modern")
+  status          String    @default("draft")
+  
+  fullName        String?
+  jobTitle        String?
+  email           String?
+  phone           String?
+  location        String?
+  linkedin        String?
+  github          String?
+  website         String?
+  telegram        String?
+  
+  summary         String?
+  
+  education       Json?
+  experience      Json?
+  skills          Json?
+  projects        Json?
+  languages       Json?
+  certifications  Json?
+  
+  pdfPath         String?
+  generatedCount  Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Analytics {
+  id          Int      @id @default(autoincrement())
+  event       String
+  userId      Int?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+}

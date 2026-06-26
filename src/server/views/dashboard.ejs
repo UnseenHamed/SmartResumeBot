@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">داشبورد</h1>
+
+<div class="stats-grid">
+  <div class="glass-card stat-card">
+    <div class="stat-value"><%= totalUsers %></div>
+    <div class="stat-label">کل کاربران</div>
+  </div>
+  
+  <div class="glass-card stat-card">
+    <div class="stat-value"><%= totalResumes %></div>
+    <div class="stat-label">رزومه‌های ساخته شده</div>
+  </div>
+</div>
+
+<h2 class="page-title" style="font-size: 1.2rem;">آخرین فعالیت‌ها (۵ رزومه اخیر)</h2>
+<div class="glass-card">
+  <table>
+    <thead>
+      <tr>
+        <th>آیدی تلگرام</th>
+        <th>نام کامل</th>
+        <th>زبان / قالب</th>
+        <th>تاریخ ایجاد</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (recentResumes && recentResumes.length > 0) { %>
+        <% recentResumes.forEach(res => { %>
+          <tr>
+            <td dir="ltr"><%= res.user.telegramId %></td>
+            <td><%= res.fullName || 'ثبت نشده' %></td>
+            <td>
+              <span class="badge"><%= res.language %></span>
+              <span class="badge" style="margin-right: 5px;"><%= res.templateName %></span>
+            </td>
+            <td><%= new Date(res.createdAt).toLocaleDateString('fa-IR') %></td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr><td colspan="4" style="text-align: center;">هنوز رزومه‌ای ثبت نشده است.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('partials/footer') %>

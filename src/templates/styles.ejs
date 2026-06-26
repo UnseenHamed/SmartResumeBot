@@ -1,0 +1,63 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css');
+
+:root {
+  --font-en-heading: 'Lexend Deca', sans-serif;
+  --font-en-body: 'Poppins', sans-serif;
+  --font-fa: 'Vazirmatn', sans-serif;
+  
+  --primary-color: #2563eb;
+  --secondary-color: #1e40af;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --bg-color: #ffffff;
+  --bg-alt: #f3f4f6;
+  --border-color: #e5e7eb;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  box-sizing: border-box;
+}
+
+body.lang-en {
+  font-family: var(--font-en-body);
+  direction: ltr;
+}
+body.lang-en h1, body.lang-en h2, body.lang-en h3, body.lang-en h4 {
+  font-family: var(--font-en-heading);
+}
+
+body.lang-fa {
+  font-family: var(--font-fa);
+  direction: rtl;
+}
+body.lang-fa h1, body.lang-fa h2, body.lang-fa h3, body.lang-fa h4 {
+  font-family: var(--font-fa);
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: white;
+  box-sizing: border-box;
+}
+
+/* Common utility classes */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--text-light); }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mt-4 { margin-top: 1rem; }
+.w-full { width: 100%; }
+</style>

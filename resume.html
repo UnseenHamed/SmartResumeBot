@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamed Lotfi - Resume</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset & Variables */
+        :root {
+            --bg-color: #ffffff;
+            --text-primary: #1A1A1A;
+            --text-secondary: #4B5563;
+            --accent-color: #2563EB;
+            --divider-color: #E5E7EB;
+            --pill-bg: #F3F4F6;
+            
+            --font-heading: 'Lexend Deca', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            font-size: 9.5pt;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout Container */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: var(--bg-color);
+            margin: 2rem auto;
+            padding: 20mm 20mm;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Top Header */
+        header {
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--divider-color);
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 24pt;
+            color: var(--text-primary);
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        h2.title {
+            font-family: var(--font-heading);
+            font-weight: 500;
+            font-size: 13pt;
+            color: var(--accent-color);
+            margin-top: 4px;
+            margin-bottom: 12px;
+        }
+
+        /* Contact Header */
+        .contact-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 9pt;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .contact-header a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .contact-header span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-header a:hover {
+            color: var(--accent-color);
+        }
+
+        .contact-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        /* Main Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 28% 68%;
+            gap: 4%;
+        }
+
+        /* Section Typography */
+        h3.section-title {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 12pt;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h3.section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        /* Left Column (Sidebar) */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-right: 1px solid var(--divider-color);
+            padding-right: 15px;
+        }
+
+        /* Skills */
+        .skill-group {
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+
+        .skill-category {
+            font-family: var(--font-heading);
+            font-weight: 500;
+            font-size: 9pt;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .skill-tag {
+            background-color: var(--pill-bg);
+            color: var(--text-secondary);
+            font-size: 7.5pt;
+            font-weight: 500;
+            padding: 3px 6px;
+            border-radius: 4px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Education & Languages */
+        .edu-item, .lang-item {
+            margin-bottom: 10px;
+        }
+
+        .edu-degree {
+            font-weight: 600;
+            font-size: 9pt;
+            color: var(--text-primary);
+        }
+
+        .edu-uni, .lang-level {
+            font-size: 8.5pt;
+            color: var(--text-secondary);
+        }
+
+        .edu-date {
+            font-size: 8pt;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        
+        .lang-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lang-name {
+            font-size: 8.5pt;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Right Column (Main) */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Summary */
+        .summary p {
+            color: var(--text-secondary);
+            text-align: justify;
+            font-size: 9pt;
+            line-height: 1.6;
+        }
+
+        /* Projects */
+        .project-item {
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+        
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+        }
+
+        .project-title {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 10.5pt;
+            color: var(--text-primary);
+        }
+
+        .project-link {
+            font-size: 8pt;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .project-role {
+            font-size: 8.5pt;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-style: italic;
+        }
+
+        .project-desc {
+            list-style-type: none;
+            margin-bottom: 6px;
+        }
+
+        .project-desc li {
+            position: relative;
+            padding-left: 12px;
+            margin-bottom: 2px;
+            color: var(--text-secondary);
+            font-size: 9pt;
+            text-align: justify;
+            line-height: 1.4;
+        }
+
+        .project-desc li::before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .project-tech {
+            font-size: 8pt;
+            color: var(--text-primary);
+            margin-top: 4px;
+        }
+        
+        .project-tech span {
+            color: var(--text-secondary);
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background: none;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                min-height: 100vh;
+                padding: 10mm 15mm;
+            }
+            .sidebar {
+                border-right-color: #D1D5DB;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <header>
+        <h1>Hamed Lotfi</h1>
+        <h2 class="title">Full-Stack Developer</h2>
+        <div class="contact-header">
+            <a href="mailto:hammedlootfi@gmail.com">
+                <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                hammedlootfi@gmail.com
+            </a>
+            <span>
+                <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                +98 921 465 7899
+            </span>
+            <a href="https://t.me/IDTelegramHamed" target="_blank">
+                <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-17.27 6.643a2.257 2.257 0 0 0-.106 4.175l4.5 1.706c.1.04.21.062.321.062a1.05 1.05 0 0 0 .713-.277l8.267-7.234c.143-.125.352-.007.252.17l-6.505 8.127a1.068 1.068 0 0 0-.226.544l-.398 3.52c-.066.586.417 1.08.98 1.046a.952.952 0 0 0 .493-.16l3.355-2.285 4.545 3.32a2.247 2.247 0 0 0 3.51-1.39l3.12-14.71a2.244 2.244 0 0 0-2.529-2.73z"/></svg>
+                @IDTelegramHamed
+            </a>
+            <span>
+                <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Iran
+            </span>
+        </div>
+    </header>
+
+    <div class="content-grid">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            
+            <section class="skills">
+                <h3 class="section-title">Skills</h3>
+                
+                <div class="skill-group">
+                    <div class="skill-category">Frontend</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Next.js</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Framer Motion</span>
+                        <span class="skill-tag">PWA</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <div class="skill-category">Backend</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">NestJS</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Python</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <div class="skill-category">AI & Automation</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AI Vision</span>
+                        <span class="skill-tag">Telegram/Bale Bots</span>
+                        <span class="skill-tag">Cron Jobs</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <div class="skill-category">Design & UI/UX</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Photoshop</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <div class="skill-category">Infrastructure & Mobile</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Swift (iOS)</span>
+                        <span class="skill-tag">Virtualization</span>
+                        <span class="skill-tag">Network Admin</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="education">
+                <h3 class="section-title">Education</h3>
+                <div class="edu-item">
+                    <div class="edu-degree">B.Sc. Computer Engineering</div>
+                    <div class="edu-uni">University of Mohaghegh Ardabili</div>
+                    <div class="edu-date">2022 — Present</div>
+                </div>
+            </section>
+
+            <section class="languages">
+                <h3 class="section-title">Languages</h3>
+                <div class="lang-item">
+                    <span class="lang-name">Persian</span>
+                    <span class="lang-level">Native</span>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-name">Azerbaijani</span>
+                    <span class="lang-level">Native</span>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-name">English</span>
+                    <span class="lang-level">Professional</span>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-name">Turkish</span>
+                    <span class="lang-level">Intermediate</span>
+                </div>
+            </section>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <section class="summary">
+                <h3 class="section-title">Professional Summary</h3>
+                <p>
+                    Full-Stack Developer specializing in building production-ready web platforms from concept to deployment. Experienced in architecting end-to-end solutions spanning AI-powered features, real-time dashboards, and complex e-commerce systems. Proficient in Next.js, NestJS, Django, and TypeScript with a strong eye for UI/UX design.
+                </p>
+            </section>
+
+            <section class="experience">
+                <h3 class="section-title">Key Projects</h3>
+
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-title">Tepam — AI-Powered Smart Waste Management Platform</div>
+                        <a href="https://tepam.ir" target="_blank" class="project-link">tepam.ir</a>
+                    </div>
+                    <div class="project-role">Full-Stack Developer & UI/UX Designer</div>
+                    <ul class="project-desc">
+                        <li>Designed and built the entire platform from concept to production as the sole developer, covering frontend, backend, API design, and deployment.</li>
+                        <li>Engineered an AI Vision pipeline for real-time waste classification, enabling users to identify recyclable materials and earn reward points via photo scan.</li>
+                        <li>Developed a gamification system with points, leaderboards, and a reward marketplace, driving user engagement in urban recycling programs.</li>
+                        <li>Built a mobile-first Progressive Web App (PWA) with Next.js frontend and NestJS backend, optimized for low-bandwidth networks with lazy-loaded assets.</li>
+                        <li>Crafted the complete UI/UX from scratch in Figma, then implemented it with pixel-perfect precision using Tailwind CSS and Framer Motion animations.</li>
+                    </ul>
+                    <div class="project-tech">
+                        <strong>Tech Stack:</strong> <span>Next.js, React, NestJS, TypeScript, AI Vision, Tailwind CSS, Framer Motion, PWA</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-title">FreshMarket — Online Grocery & Delivery Platform</div>
+                        <span class="project-link">In Development</span>
+                    </div>
+                    <div class="project-role">Full-Stack Developer</div>
+                    <ul class="project-desc">
+                        <li>Built a full-featured e-commerce platform with real-time inventory management, multi-step checkout, and map-based delivery address selection.</li>
+                        <li>Developed role-based dashboards for Admin (sales analytics & charts), Warehouse (order picking workflow), and Courier (delivery tracking).</li>
+                        <li>Integrated an AI-powered shopping assistant (Freshy) using Google Gemini API, providing personalized product recommendations and recipe suggestions.</li>
+                        <li>Implemented a complete order lifecycle: cart → checkout → payment → warehouse picking → courier dispatch → customer delivery confirmation.</li>
+                    </ul>
+                    <div class="project-tech">
+                        <strong>Tech Stack:</strong> <span>Django, Python, Google Gemini API, SQLite, Tailwind CSS, JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-title">Tarabari 1840 — Fleet Management & Logistics</div>
+                        <span class="project-link">In Development</span>
+                    </div>
+                    <div class="project-role">Frontend Developer</div>
+                    <ul class="project-desc">
+                        <li>Developing an integrated fleet management dashboard for transportation and logistics operations.</li>
+                        <li>Building interactive data visualizations and real-time tracking interfaces for fleet optimization.</li>
+                        <li>Focusing on clean architecture and highly maintainable components for a complex logistics ecosystem.</li>
+                    </ul>
+                    <div class="project-tech">
+                        <strong>Tech Stack:</strong> <span>React, Dashboard UI, Data Visualization, Logistics Systems</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

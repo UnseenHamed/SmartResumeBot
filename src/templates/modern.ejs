@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="<%= data.language === 'en' ? 'en' : 'fa' %>">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume</title>
+  <%- include('styles') %>
+  <style>
+    .modern-resume {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+    }
+    
+    .sidebar {
+      background: var(--bg-alt);
+      padding: 30px;
+      border-radius: 12px;
+      height: fit-content;
+    }
+    
+    .main-content {
+      padding: 10px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    
+    .header h2 {
+      margin: 5px 0 20px 0;
+      font-size: 18px;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    .section-title {
+      font-size: 20px;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      margin-top: 30px;
+      font-weight: 600;
+    }
+
+    .sidebar .section-title {
+      margin-top: 25px;
+      font-size: 18px;
+    }
+    .sidebar .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .contact-info {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    
+    .contact-info strong {
+      display: block;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+
+    .skill-category {
+      margin-bottom: 15px;
+    }
+    .skill-category font {
+      font-weight: 600;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-tag {
+      background: white;
+      border: 1px solid var(--border-color);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-dark);
+    }
+
+    .timeline-item {
+      margin-bottom: 20px;
+    }
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+    .timeline-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0;
+    }
+    .timeline-subtitle {
+      font-size: 14px;
+      color: var(--primary-color);
+      font-weight: 500;
+      margin: 0;
+    }
+    .timeline-date {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+    .timeline-desc {
+      margin: 5px 0 0 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-dark);
+    }
+    .timeline-desc ul {
+      margin: 5px 0;
+      padding-inline-start: 20px;
+    }
+    
+    .summary-box {
+      background: var(--bg-alt);
+      padding: 15px;
+      border-left: 4px solid var(--primary-color);
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    body.lang-fa .summary-box {
+      border-left: none;
+      border-right: 4px solid var(--primary-color);
+    }
+
+  </style>
+</head>
+<body class="lang-<%= data.language %>">
+  <div class="page modern-resume">
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+      
+      <!-- Contact -->
+      <h3 class="section-title"><%= data.language === 'en' ? 'Contact' : 'تماس' %></h3>
+      
+      <% if (data.email) { %>
+      <div class="contact-info">
+        <strong><%= data.language === 'en' ? 'Email' : 'ایمیل' %></strong>
+        <%= data.email %>
+      </div>
+      <% } %>
+      
+      <% if (data.phone) { %>
+      <div class="contact-info">
+        <strong><%= data.language === 'en' ? 'Phone' : 'تلفن' %></strong>
+        <span dir="ltr"><%= data.phone %></span>
+      </div>
+      <% } %>
+      
+      <% if (data.location) { %>
+      <div class="contact-info">
+        <strong><%= data.language === 'en' ? 'Location' : 'موقعیت' %></strong>
+        <%= data.location %>
+      </div>
+      <% } %>
+      
+      <% if (data.linkedin) { %>
+      <div class="contact-info">
+        <strong>LinkedIn</strong>
+        <%= data.linkedin %>
+      </div>
+      <% } %>
+      
+      <% if (data.github) { %>
+      <div class="contact-info">
+        <strong>GitHub / Portfolio</strong>
+        <%= data.github %>
+      </div>
+      <% } %>
+
+      <!-- Skills -->
+      <% if (data.skills && data.skills.length > 0) { %>
+      <h3 class="section-title"><%= data.language === 'en' ? 'Skills' : 'مهارت‌ها' %></h3>
+      <% data.skills.forEach(skillGroup => { %>
+        <div class="skill-category">
+          <font><%= skillGroup.category %></font>
+          <div class="skill-tags">
+            <% skillGroup.items.forEach(item => { %>
+              <span class="skill-tag"><%= item %></span>
+            <% }) %>
+          </div>
+        </div>
+      <% }) %>
+      <% } %>
+
+      <!-- Languages -->
+      <% if (data.knownLanguages && data.knownLanguages.length > 0) { %>
+      <h3 class="section-title"><%= data.language === 'en' ? 'Languages' : 'زبان‌ها' %></h3>
+      <% data.knownLanguages.forEach(lang => { %>
+        <div class="contact-info flex justify-between">
+          <span><%= lang.name %></span>
+          <span class="text-secondary"><%= lang.level %></span>
+        </div>
+      <% }) %>
+      <% } %>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      
+      <div class="header">
+        <h1><%= data.fullName %></h1>
+        <h2><%= data.jobTitle %></h2>
+      </div>
+
+      <% if (data.summary) { %>
+      <div class="summary-box">
+        <%= data.summary %>
+      </div>
+      <% } %>
+
+      <!-- Experience -->
+      <% if (data.experience && data.experience.length > 0) { %>
+      <h3 class="section-title"><%= data.language === 'en' ? 'Experience' : 'سوابق کاری' %></h3>
+      <% data.experience.forEach(exp => { %>
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <h4 class="timeline-title"><%= exp.title %></h4>
+            <span class="timeline-date"><%= exp.date %></span>
+          </div>
+          <p class="timeline-subtitle"><%= exp.company %></p>
+          <div class="timeline-desc">
+            <ul>
+              <% exp.descriptions.forEach(desc => { %>
+                <li><%= desc %></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      <% }) %>
+      <% } %>
+
+      <!-- Projects -->
+      <% if (data.projects && data.projects.length > 0) { %>
+      <h3 class="section-title"><%= data.language === 'en' ? 'Projects' : 'پروژه‌ها' %></h3>
+      <% data.projects.forEach(proj => { %>
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <h4 class="timeline-title"><%= proj.name %></h4>
+            <% if (proj.link) { %>
+            <span class="timeline-date"><%= proj.link %></span>
+            <% } %>
+          </div>
+          <p class="timeline-subtitle"><%= proj.role %> | <%= proj.techStack %></p>
+          <div class="timeline-desc">
+            <ul>
+              <% proj.descriptions.forEach(desc => { %>
+                <li><%= desc %></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      <% }) %>
+      <% } %>
+
+      <!-- Education -->
+      <% if (data.education && data.education.length > 0) { %>
+      <h3 class="section-title"><%= data.language === 'en' ? 'Education' : 'تحصیلات' %></h3>
+      <% data.education.forEach(edu => { %>
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <h4 class="timeline-title"><%= edu.degree %></h4>
+            <span class="timeline-date"><%= edu.date %></span>
+          </div>
+          <p class="timeline-subtitle"><%= edu.university %></p>
+        </div>
+      <% }) %>
+      <% } %>
+
+    </div>
+  </div>
+</body>
+</html>
