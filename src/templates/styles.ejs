@@ -1,19 +1,19 @@
 <style>
-/* ─── Local Font Faces ─── */
-@font-face { font-family: 'Vazirmatn'; src: url('<%= fontsDir %>/Vazirmatn-Light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('<%= fontsDir %>/Vazirmatn-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('<%= fontsDir %>/Vazirmatn-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('<%= fontsDir %>/Vazirmatn-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('<%= fontsDir %>/Vazirmatn-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+/* ─── Local Font Faces (Base64 Encoded for Puppeteer) ─── */
+@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Light"] %>') format('woff2'); font-weight: 300; font-style: normal; font-display: block; }
+@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Regular"] %>') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Medium"] %>') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-SemiBold"] %>') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Bold"] %>') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
 
-@font-face { font-family: 'Poppins'; src: url('<%= fontsDir %>/Poppins-Light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: block; }
-@font-face { font-family: 'Poppins'; src: url('<%= fontsDir %>/Poppins-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
-@font-face { font-family: 'Poppins'; src: url('<%= fontsDir %>/Poppins-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
-@font-face { font-family: 'Poppins'; src: url('<%= fontsDir %>/Poppins-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Light"] %>') format('woff2'); font-weight: 300; font-style: normal; font-display: block; }
+@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Regular"] %>') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-SemiBold"] %>') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Bold"] %>') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
 
-@font-face { font-family: 'Lexend Deca'; src: url('<%= fontsDir %>/LexendDeca-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
-@font-face { font-family: 'Lexend Deca'; src: url('<%= fontsDir %>/LexendDeca-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
-@font-face { font-family: 'Lexend Deca'; src: url('<%= fontsDir %>/LexendDeca-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+@font-face { font-family: 'Lexend Deca'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-Regular"] %>') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'Lexend Deca'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-SemiBold"] %>') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+@font-face { font-family: 'Lexend Deca'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-Bold"] %>') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
 
 /* ─── Design Tokens ─── */
 :root {

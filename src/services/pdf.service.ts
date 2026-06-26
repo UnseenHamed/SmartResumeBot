@@ -6,8 +6,24 @@ import { ResumeData } from '../bot/helpers/format';
 export async function generatePdf(data: ResumeData): Promise<Buffer> {
   const templateName = data.template || 'modern';
   const templatePath = path.join(__dirname, `../templates/${templateName}.ejs`);
+  // Read fonts as base64 to embed directly in HTML (foolproof for Puppeteer)
+  const fs = require('fs');
+  const fontNames = [
+    'Vazirmatn-Light', 'Vazirmatn-Regular', 'Vazirmatn-Medium', 'Vazirmatn-SemiBold', 'Vazirmatn-Bold',
+    'Poppins-Light', 'Poppins-Regular', 'Poppins-SemiBold', 'Poppins-Bold',
+    'LexendDeca-Regular', 'LexendDeca-SemiBold', 'LexendDeca-Bold'
+  ];
   
-  const fontsDir = 'file://' + path.resolve(__dirname, '../templates/fonts');
+  const fontBase64: Record<string, string> = {};
+  for (const font of fontNames) {
+    try {
+      const fontPathOnDisk = path.join(__dirname, `../templates/fonts/${font}.woff2`);
+      fontBase64[font] = fs.readFileSync(fontPathOnDisk).toString('base64');
+    } catch (e) {
+      console.error(`Failed to load font ${font}`, e);
+      fontBase64[font] = ''; // fallback
+    }
+  }
   
   const icons: Record<string, string> = {
     email: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
@@ -26,7 +42,7 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
   const icon = (name: string) => icons[name?.toLowerCase()] || icons.link;
   
   // Render HTML using EJS
-  const html = await ejs.renderFile(templatePath, { data, fontsDir, icon });
+  const html = await ejs.renderFile(templatePath, { data, fontBase64, icon });
 
   // Launch Puppeteer (with args for running on servers like Render)
   const browser = await puppeteer.launch({
@@ -38,7 +54,8 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
       '--disable-gpu',
       '--no-zygote',
       '--single-process',
-      '--font-render-hinting=none'
+      '--font-render-hinting=none',
+      '--allow-file-access-from-files'
     ]
   });
 
