@@ -2,106 +2,174 @@
 <html lang="<%= data.language === 'en' ? 'en' : 'fa' %>">
 <head>
   <meta charset="UTF-8">
-  <title>Resume - Professional</title>
+  <title>Resume — Professional</title>
   <%- include('styles') %>
   <style>
     .professional-resume {
       padding: 0;
       max-width: 210mm;
       margin: auto;
-      font-family: var(--font-en-body);
-      color: #333;
     }
+    
+    /* ─── Header ─── */
     .header {
-      background: #2c3e50;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
       color: white;
       padding: 40px 50px;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
     }
+    .header-info { flex: 1; }
     .header h1 {
-      font-size: 38px;
-      margin: 0 0 10px 0;
-      font-family: var(--font-en-heading);
+      font-size: 32px;
+      margin: 0 0 6px 0;
+      font-weight: 700;
     }
     .header h2 {
-      font-size: 18px;
-      margin: 0 0 15px 0;
-      font-weight: 300;
-      color: #bdc3c7;
+      font-size: 15px;
+      margin: 0;
+      font-weight: 400;
+      color: #94a3b8;
     }
-    .contact-info {
+    .header-contact {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      font-size: 13px;
-      color: #ecf0f1;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+      color: #cbd5e1;
     }
+    .header-contact .item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-contact .ic { color: #60a5fa; }
+    .header-contact .ic svg { display: block; }
+
+    /* ─── Main Body ─── */
     .main-body {
-      padding: 40px 50px;
+      padding: 35px 50px 50px;
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1fr 300px;
       gap: 40px;
     }
+
+    .section { margin-bottom: 28px; }
     .section-title {
-      font-size: 18px;
-      color: #2c3e50;
-      border-bottom: 2px solid #2c3e50;
-      padding-bottom: 5px;
-      margin-bottom: 20px;
-      font-weight: 600;
+      font-size: 14px;
+      color: #0f172a;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 6px;
+      margin: 0 0 16px 0;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    .item {
+
+    /* ─── Timeline ─── */
+    .timeline-entry {
       margin-bottom: 20px;
+      padding-inline-start: 18px;
+      border-inline-start: 2px solid #e2e8f0;
+      position: relative;
     }
-    .item-title {
-      font-size: 16px;
+    .timeline-entry::before {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #0f172a;
+      border-radius: 50%;
+      top: 6px;
+    }
+    body.lang-en .timeline-entry::before { left: -5px; }
+    body.lang-fa .timeline-entry::before { right: -5px; }
+
+    .timeline-entry .title {
+      font-size: 14px;
       font-weight: 600;
       margin: 0;
-      color: #2c3e50;
+      color: #1e293b;
     }
-    .item-subtitle {
-      font-size: 14px;
-      color: #7f8c8d;
-      margin: 2px 0;
-    }
-    .item-date {
+    .timeline-entry .sub {
       font-size: 13px;
-      color: #95a5a6;
+      color: #64748b;
+      margin: 2px 0 0 0;
+    }
+    .timeline-entry .date {
+      font-size: 11px;
+      color: #94a3b8;
       font-weight: 500;
     }
-    .item-desc {
-      font-size: 13.5px;
-      line-height: 1.6;
-      margin-top: 8px;
-      padding-inline-start: 18px;
-    }
-    .skills-block {
-      margin-bottom: 15px;
-    }
-    .skills-block h4 {
-      margin: 0 0 5px 0;
-      font-size: 14px;
-      color: #34495e;
-    }
-    .skills-block p {
-      margin: 0;
+    .timeline-entry .desc {
       font-size: 13px;
-      color: #7f8c8d;
+      line-height: 1.6;
+      color: #475569;
+      margin: 6px 0 0;
+      padding-inline-start: 14px;
+    }
+    .timeline-entry .desc li { margin-bottom: 2px; }
+
+    .summary-text {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #475569;
+      margin: 0;
+      border-inline-start: 3px solid #0f172a;
+      padding-inline-start: 14px;
+    }
+
+    /* ─── Right Column ─── */
+    .right-col .section { margin-bottom: 24px; }
+    .right-col .section-title {
+      font-size: 13px;
+      border-bottom-width: 1.5px;
+    }
+
+    .skill-block { margin-bottom: 14px; }
+    .skill-block:last-child { margin-bottom: 0; }
+    .skill-block h4 {
+      margin: 0 0 6px 0;
+      font-size: 12px;
+      color: #334155;
+      font-weight: 600;
+    }
+    .skill-block p {
+      margin: 0;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .lang-entry {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .lang-entry .level {
+      color: #94a3b8;
+      font-size: 12px;
     }
   </style>
 </head>
 <body class="lang-<%= data.language %>">
   <div class="page professional-resume">
     <div class="header">
-      <h1><%= data.fullName %></h1>
-      <h2><%= data.jobTitle %></h2>
-      <div class="contact-info">
-        <% if (data.email) { %><span><i class="fa-solid fa-envelope"></i> <%= data.email %></span><% } %>
-        <% if (data.phone) { %><span>• <i class="fa-solid fa-phone"></i> <span dir="ltr"><%= data.phone %></span></span><% } %>
-        <% if (data.location) { %><span>• <i class="fa-solid fa-location-dot"></i> <%= data.location %></span><% } %>
+      <div class="header-info">
+        <h1><%= data.fullName || '' %></h1>
+        <h2><%= data.jobTitle || '' %></h2>
+      </div>
+      <div class="header-contact">
+        <% if (data.email) { %><span class="item"><span class="ic"><%- icon('email') %></span> <%= data.email %></span><% } %>
+        <% if (data.phone) { %><span class="item"><span class="ic"><%- icon('phone') %></span> <span dir="ltr"><%= data.phone %></span></span><% } %>
+        <% if (data.location) { %><span class="item"><span class="ic"><%- icon('location') %></span> <%= data.location %></span><% } %>
         <% if (data.socialLinks && data.socialLinks.length > 0) { data.socialLinks.forEach(link => { %>
-          <span>• <i class="fa-brands fa-<%= link.name.toLowerCase() %>"></i> <%= link.url %></span>
+          <span class="item"><span class="ic"><%- icon(link.name) %></span> <%= link.url %></span>
         <% }) } %>
       </div>
     </div>
@@ -111,22 +179,35 @@
         <% if (data.summary) { %>
         <div class="section">
           <h3 class="section-title"><%= data.language === 'en' ? 'Profile' : 'پروفایل' %></h3>
-          <p style="font-size: 14px; line-height: 1.6;"><%= data.summary %></p>
+          <p class="summary-text"><%= data.summary %></p>
         </div>
         <% } %>
 
         <% if (data.experience && data.experience.length > 0) { %>
         <div class="section">
-          <h3 class="section-title"><%= data.language === 'en' ? 'Experience' : 'تجربیات' %></h3>
+          <h3 class="section-title"><%= data.language === 'en' ? 'Experience' : 'سوابق کاری' %></h3>
           <% data.experience.forEach(exp => { %>
-            <div class="item">
-              <div class="flex justify-between items-center">
-                <p class="item-title"><%= exp.title %></p>
-                <span class="item-date"><%= exp.date %></span>
-              </div>
-              <p class="item-subtitle"><%= exp.company %></p>
-              <ul class="item-desc">
-                <% exp.descriptions.forEach(desc => { %><li><%= desc %></li><% }) %>
+            <div class="timeline-entry">
+              <p class="title"><%= exp.title %></p>
+              <p class="sub"><%= exp.company %></p>
+              <span class="date"><%= exp.date %></span>
+              <ul class="desc">
+                <% (exp.descriptions || []).forEach(desc => { %><li><%= desc %></li><% }) %>
+              </ul>
+            </div>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <% if (data.projects && data.projects.length > 0) { %>
+        <div class="section">
+          <h3 class="section-title"><%= data.language === 'en' ? 'Projects' : 'پروژه‌ها' %></h3>
+          <% data.projects.forEach(proj => { %>
+            <div class="timeline-entry">
+              <p class="title"><%= proj.name %></p>
+              <p class="sub"><%= proj.role %><% if (proj.techStack) { %> · <%= proj.techStack %><% } %></p>
+              <ul class="desc">
+                <% (proj.descriptions || []).forEach(desc => { %><li><%= desc %></li><% }) %>
               </ul>
             </div>
           <% }) %>
@@ -139,10 +220,10 @@
         <div class="section">
           <h3 class="section-title"><%= data.language === 'en' ? 'Education' : 'تحصیلات' %></h3>
           <% data.education.forEach(edu => { %>
-            <div class="item">
-              <p class="item-title"><%= edu.degree %></p>
-              <p class="item-subtitle"><%= edu.university %></p>
-              <span class="item-date"><%= edu.date %></span>
+            <div class="timeline-entry">
+              <p class="title"><%= edu.degree %></p>
+              <p class="sub"><%= edu.university %></p>
+              <span class="date"><%= edu.date %></span>
             </div>
           <% }) %>
         </div>
@@ -152,16 +233,27 @@
         <div class="section">
           <h3 class="section-title"><%= data.language === 'en' ? 'Skills' : 'مهارت‌ها' %></h3>
           <% data.skills.forEach(skillGroup => { %>
-            <div class="skills-block">
+            <div class="skill-block">
               <h4><%= skillGroup.category %></h4>
-              <p><%= skillGroup.items.join(', ') %></p>
+              <p><%= skillGroup.items.join(' · ') %></p>
+            </div>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <% if (data.knownLanguages && data.knownLanguages.length > 0) { %>
+        <div class="section">
+          <h3 class="section-title"><%= data.language === 'en' ? 'Languages' : 'زبان‌ها' %></h3>
+          <% data.knownLanguages.forEach(lang => { %>
+            <div class="lang-entry">
+              <span><%= lang.name %></span>
+              <span class="level"><%= lang.level %></span>
             </div>
           <% }) %>
         </div>
         <% } %>
       </div>
     </div>
-
   </div>
 </body>
 </html>

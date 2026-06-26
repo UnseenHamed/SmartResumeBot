@@ -2,121 +2,138 @@
 <html lang="<%= data.language === 'en' ? 'en' : 'fa' %>">
 <head>
   <meta charset="UTF-8">
-  <title>Resume - Classic</title>
+  <title>Resume — Classic</title>
   <%- include('styles') %>
   <style>
     .classic-resume {
-      padding: 50px;
+      padding: 50px 55px;
       max-width: 210mm;
       margin: auto;
-      font-family: var(--font-en-heading);
     }
     
+    /* ─── Header ─── */
     .header {
       text-align: center;
-      border-bottom: 2px solid #333;
-      padding-bottom: 20px;
-      margin-bottom: 30px;
+      padding-bottom: 22px;
+      margin-bottom: 25px;
+      border-bottom: 3px double #2c3e50;
     }
-    
     .header h1 {
-      font-size: 36px;
+      font-size: 34px;
       margin: 0;
+      letter-spacing: 3px;
+      color: #1a1a2e;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #222;
     }
-    
     .header h2 {
-      font-size: 18px;
-      font-weight: normal;
-      margin: 10px 0;
-      color: #555;
+      font-size: 15px;
+      font-weight: 400;
+      margin: 8px 0 18px;
+      color: #64748b;
+      letter-spacing: 1px;
     }
-    
-    .contact-info {
+    .contact-bar {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      font-size: 13px;
-      color: #444;
       flex-wrap: wrap;
+      gap: 6px 20px;
+      font-size: 12px;
+      color: #475569;
     }
-    
-    .section {
-      margin-bottom: 25px;
+    .contact-bar .item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-    
+    .contact-bar .ic { color: #64748b; }
+    .contact-bar .ic svg { display: block; }
+
+    /* ─── Sections ─── */
+    .section { margin-bottom: 24px; }
     .section-title {
-      font-size: 18px;
+      font-size: 14px;
       text-transform: uppercase;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 5px;
-      margin-bottom: 15px;
-      color: #111;
-      font-weight: 600;
+      letter-spacing: 2px;
+      color: #1a1a2e;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid #cbd5e1;
     }
 
-    .item {
-      margin-bottom: 15px;
-    }
-    
-    .item-header {
+    .entry { margin-bottom: 16px; }
+    .entry-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      margin-bottom: 2px;
     }
-    
-    .item-title {
-      font-weight: bold;
-      font-size: 15px;
+    .entry-title {
+      font-size: 14px;
+      font-weight: 600;
       margin: 0;
+      color: #1e293b;
     }
-    
-    .item-subtitle {
-      font-style: italic;
-      color: #555;
-      margin: 2px 0;
-      font-size: 14px;
-    }
-    
-    .item-date {
+    .entry-subtitle {
       font-size: 13px;
-      color: #666;
+      color: #64748b;
+      margin: 1px 0 0 0;
     }
-    
-    .item-desc {
-      margin-top: 5px;
-      font-size: 14px;
-      line-height: 1.5;
+    .entry-date {
+      font-size: 12px;
+      color: #94a3b8;
+      white-space: nowrap;
+      font-weight: 500;
     }
+    .entry-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #475569;
+      margin: 5px 0 0;
+      padding-inline-start: 16px;
+    }
+    .entry-desc li { margin-bottom: 2px; }
 
-    .skills-list {
+    /* ─── Two Column Layout ─── */
+    .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 15px;
     }
-    .skill-category {
-      font-weight: bold;
-      font-size: 14px;
+    .skills-group { margin-bottom: 12px; }
+    .skills-group-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      margin: 0 0 4px 0;
+    }
+    .skills-items {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.6;
     }
     
-    body.lang-fa .classic-resume {
-      font-family: var(--font-fa);
+    .summary-text {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #475569;
+      margin: 0;
+      text-align: justify;
     }
   </style>
 </head>
 <body class="lang-<%= data.language %>">
   <div class="page classic-resume">
     <div class="header">
-      <h1><%= data.fullName %></h1>
-      <h2><%= data.jobTitle %></h2>
-      <div class="contact-info">
-        <% if (data.email) { %><span><i class="fa-solid fa-envelope"></i> <%= data.email %></span><% } %>
-        <% if (data.phone) { %><span>• <i class="fa-solid fa-phone"></i> <span dir="ltr"><%= data.phone %></span></span><% } %>
-        <% if (data.location) { %><span>• <i class="fa-solid fa-location-dot"></i> <%= data.location %></span><% } %>
+      <h1><%= data.fullName || '' %></h1>
+      <h2><%= data.jobTitle || '' %></h2>
+      <div class="contact-bar">
+        <% if (data.email) { %><span class="item"><span class="ic"><%- icon('email') %></span> <%= data.email %></span><% } %>
+        <% if (data.phone) { %><span class="item"><span class="ic"><%- icon('phone') %></span> <span dir="ltr"><%= data.phone %></span></span><% } %>
+        <% if (data.location) { %><span class="item"><span class="ic"><%- icon('location') %></span> <%= data.location %></span><% } %>
         <% if (data.socialLinks && data.socialLinks.length > 0) { data.socialLinks.forEach(link => { %>
-          <span>• <i class="fa-brands fa-<%= link.name.toLowerCase() %>"></i> <%= link.url %></span>
+          <span class="item"><span class="ic"><%- icon(link.name) %></span> <%= link.url %></span>
         <% }) } %>
       </div>
     </div>
@@ -124,7 +141,7 @@
     <% if (data.summary) { %>
     <div class="section">
       <h3 class="section-title"><%= data.language === 'en' ? 'Professional Summary' : 'خلاصه حرفه‌ای' %></h3>
-      <p class="item-desc"><%= data.summary %></p>
+      <p class="summary-text"><%= data.summary %></p>
     </div>
     <% } %>
 
@@ -132,13 +149,13 @@
     <div class="section">
       <h3 class="section-title"><%= data.language === 'en' ? 'Professional Experience' : 'سوابق کاری' %></h3>
       <% data.experience.forEach(exp => { %>
-        <div class="item">
-          <div class="item-header">
-            <p class="item-title"><%= exp.title %> - <%= exp.company %></p>
-            <span class="item-date"><%= exp.date %></span>
+        <div class="entry">
+          <div class="entry-header">
+            <p class="entry-title"><%= exp.title %> — <%= exp.company %></p>
+            <span class="entry-date"><%= exp.date %></span>
           </div>
-          <ul class="item-desc">
-            <% exp.descriptions.forEach(desc => { %><li><%= desc %></li><% }) %>
+          <ul class="entry-desc">
+            <% (exp.descriptions || []).forEach(desc => { %><li><%= desc %></li><% }) %>
           </ul>
         </div>
       <% }) %>
@@ -149,11 +166,12 @@
     <div class="section">
       <h3 class="section-title"><%= data.language === 'en' ? 'Education' : 'تحصیلات' %></h3>
       <% data.education.forEach(edu => { %>
-        <div class="item">
-          <div class="item-header">
-            <p class="item-title"><%= edu.degree %> - <%= edu.university %></p>
-            <span class="item-date"><%= edu.date %></span>
+        <div class="entry">
+          <div class="entry-header">
+            <p class="entry-title"><%= edu.degree %></p>
+            <span class="entry-date"><%= edu.date %></span>
           </div>
+          <p class="entry-subtitle"><%= edu.university %></p>
         </div>
       <% }) %>
     </div>
@@ -162,11 +180,42 @@
     <% if (data.skills && data.skills.length > 0) { %>
     <div class="section">
       <h3 class="section-title"><%= data.language === 'en' ? 'Skills' : 'مهارت‌ها' %></h3>
-      <div class="skills-list">
+      <div class="two-col">
         <% data.skills.forEach(skillGroup => { %>
-          <div>
-            <span class="skill-category"><%= skillGroup.category %>:</span>
-            <span class="item-desc"><%= skillGroup.items.join(', ') %></span>
+          <div class="skills-group">
+            <p class="skills-group-title"><%= skillGroup.category %></p>
+            <span class="skills-items"><%= skillGroup.items.join(' · ') %></span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <% } %>
+
+    <% if (data.projects && data.projects.length > 0) { %>
+    <div class="section">
+      <h3 class="section-title"><%= data.language === 'en' ? 'Projects' : 'پروژه‌ها' %></h3>
+      <% data.projects.forEach(proj => { %>
+        <div class="entry">
+          <div class="entry-header">
+            <p class="entry-title"><%= proj.name %></p>
+            <% if (proj.link) { %><span class="entry-date"><%= proj.link %></span><% } %>
+          </div>
+          <p class="entry-subtitle"><%= proj.role %><% if (proj.techStack) { %> · <%= proj.techStack %><% } %></p>
+          <ul class="entry-desc">
+            <% (proj.descriptions || []).forEach(desc => { %><li><%= desc %></li><% }) %>
+          </ul>
+        </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <% if (data.knownLanguages && data.knownLanguages.length > 0) { %>
+    <div class="section">
+      <h3 class="section-title"><%= data.language === 'en' ? 'Languages' : 'زبان‌ها' %></h3>
+      <div class="two-col">
+        <% data.knownLanguages.forEach(lang => { %>
+          <div class="skills-group">
+            <span class="skills-group-title"><%= lang.name %></span> — <span class="skills-items"><%= lang.level %></span>
           </div>
         <% }) %>
       </div>

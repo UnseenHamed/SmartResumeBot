@@ -36,7 +36,12 @@ Your task is to:
 1. Extract any new information from the user's message (e.g. names, jobs, universities, skills, links like Telegram/LinkedIn/GitHub).
 2. MERGE this new information with the 'Current Resume Data'.
 3. ${langDirective} (Very important: enhance descriptions to be ATS-friendly and professional).
-4. For social links (Telegram, Github, LinkedIn, etc.), add them to the 'socialLinks' array with 'name' (e.g. 'Telegram') and 'url' (or ID).
+4. For social links (Telegram, Github, LinkedIn, WhatsApp, Twitter/X, Instagram, personal website, portfolio), add them to the 'socialLinks' array.
+   CRITICAL: The 'name' field MUST be exactly one of these lowercase values: telegram, github, linkedin, whatsapp, twitter, instagram, website, portfolio.
+   Examples: If user says "آیدی تلگرامم hamed_dev هست" → { "name": "telegram", "url": "hamed_dev" }
+             If user says "گیت‌هاب من github.com/hamed" → { "name": "github", "url": "github.com/hamed" }
+             If user says "سایت شخصی من example.com" → { "name": "website", "url": "example.com" }
+    "socialLinks": [{ "name": string, "url": string }],
 5. Generate a 'summary' if there's enough data (experience/skills), otherwise leave it empty.
 6. Write a conversational, premium, and friendly 'aiMessage' IN PERSIAN (Farsi) to reply to the user. 
    - In the aiMessage, first acknowledge what you successfully added (e.g. "اطلاعات شغلی شما در اسنپ رو با موفقیت ثبت کردم!").

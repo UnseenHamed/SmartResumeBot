@@ -19,22 +19,27 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
       '--disable-dev-shm-usage',
       '--disable-gpu',
       '--no-zygote',
-      '--single-process'
+      '--single-process',
+      '--font-render-hinting=none'
     ]
   });
 
   const page = await browser.newPage();
   
-  // Set content
+  // Allow file:// protocol for local fonts
+  await page.setBypassCSP(true);
+  
+  // Set content — fonts are local so networkidle0 is fast
   await page.setContent(html, {
-    waitUntil: 'domcontentloaded',
-    timeout: 60000
+    waitUntil: 'networkidle0' as any,
+    timeout: 30000
   });
 
-  // Inject script to ensure fonts are loaded
+  // Ensure all fonts are loaded
   await page.evaluateHandle('document.fonts.ready');
-  // Explicitly wait 2 seconds for external fonts (Vazirmatn, FontAwesome) to render completely
-  await new Promise(r => setTimeout(r, 2000));
+
+  // Emulate print media for better PDF rendering
+  await page.emulateMediaType('print');
 
   // Generate PDF
   const pdfBuffer = await page.pdf({
