@@ -13,7 +13,6 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
   // Launch Puppeteer (with args for running on servers like Render)
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
@@ -28,7 +27,7 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
   
   // Set content
   await page.setContent(html, {
-    waitUntil: 'networkidle2',
+    waitUntil: 'networkidle2' as any,
     timeout: 60000
   });
 
