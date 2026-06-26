@@ -7,8 +7,10 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
   const templateName = data.template || 'modern';
   const templatePath = path.join(__dirname, `../templates/${templateName}.ejs`);
   
+  const fontsDir = 'file://' + path.resolve(__dirname, '../templates/fonts');
+  
   // Render HTML using EJS
-  const html = await ejs.renderFile(templatePath, { data });
+  const html = await ejs.renderFile(templatePath, { data, fontsDir });
 
   // Launch Puppeteer (with args for running on servers like Render)
   const browser = await puppeteer.launch({
