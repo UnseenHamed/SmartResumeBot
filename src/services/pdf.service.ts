@@ -33,6 +33,8 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
 
   // Inject script to ensure fonts are loaded
   await page.evaluateHandle('document.fonts.ready');
+  // Explicitly wait 2 seconds for external fonts (Vazirmatn, FontAwesome) to render completely
+  await new Promise(r => setTimeout(r, 2000));
 
   // Generate PDF
   const pdfBuffer = await page.pdf({
