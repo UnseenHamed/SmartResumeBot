@@ -36,7 +36,7 @@ export async function generateProfessionalSummary(data: ResumeData): Promise<str
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemma-4-31b',
+      model: 'gemma-4-31b-it',
       contents: prompt,
     });
     

@@ -3,5 +3,6 @@
 set -o errexit
 
 npm install
+npx puppeteer browsers install chrome
 npm run build || true
 npx prisma db push --accept-data-loss
