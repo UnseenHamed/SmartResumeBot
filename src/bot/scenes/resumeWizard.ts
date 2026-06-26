@@ -1,8 +1,7 @@
 import { Scenes } from 'telegraf';
 import { MyContext } from '../types';
 import {
-  ResumeState, Section, PERSONAL_FIELDS, SECTION_FLOW,
-  nextSection, buildMessage
+  ResumeState, Section, buildMessage
 } from '../helpers/format';
 import { generateProfessionalSummary } from '../../services/ai.service';
 import { generatePdf } from '../../services/pdf.service';

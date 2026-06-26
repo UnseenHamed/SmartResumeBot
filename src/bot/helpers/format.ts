@@ -115,20 +115,4 @@ export function buildMessage(state: ResumeState, name?: string): { text: string;
 
 
 
-// ─── Router ───────────────────────────────────────────────────────
 
-export function buildMessage(state: ResumeState, name?: string): { text: string; keyboard: any } {
-  switch (state.section) {
-    case 'welcome':       return buildWelcomeMsg(name || 'کاربر');
-    case 'language':      return buildLanguageMsg();
-    case 'template':      return buildTemplateMsg();
-    case 'personal':      return buildPersonalMsg(state);
-    case 'education':     return buildEducationMsg(state);
-    case 'experience':    return buildExperienceMsg(state);
-    case 'skills':        return buildSkillsMsg(state);
-    case 'projects':      return buildProjectsMsg(state);
-    case 'knownLanguages': return buildKnownLanguagesMsg(state);
-    case 'review':        return buildReviewMsg(state);
-    default:              return buildWelcomeMsg(name || 'کاربر');
-  }
-}
