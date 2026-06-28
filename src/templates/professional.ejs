@@ -1,259 +1,419 @@
 <!DOCTYPE html>
 <html lang="<%= data.language === 'en' ? 'en' : 'fa' %>">
+
 <head>
   <meta charset="UTF-8">
   <title>Resume — Professional</title>
   <%- include('styles') %>
-  <style>
-    .professional-resume {
-      padding: 0;
-      max-width: 210mm;
-      margin: auto;
-    }
-    
-    /* ─── Header ─── */
-    .header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-      color: white;
-      padding: 40px 50px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 30px;
-    }
-    .header-info { flex: 1; }
-    .header h1 {
-      font-size: 32px;
-      margin: 0 0 6px 0;
-      font-weight: 700;
-    }
-    .header h2 {
-      font-size: 15px;
-      margin: 0;
-      font-weight: 400;
-      color: #94a3b8;
-    }
-    .header-contact {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 12px;
-      color: #cbd5e1;
-    }
-    .header-contact .item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .header-contact .ic { color: #60a5fa; }
-    .header-contact .ic svg { display: block; }
+    <style>
+      .professional-resume {
+        padding: 0;
+        max-width: 210mm;
+        margin: auto;
+      }
 
-    /* ─── Main Body ─── */
-    .main-body {
-      padding: 35px 50px 50px;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 40px;
-    }
+      .header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+        color: white;
+        padding: 42px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+        position: relative;
+        overflow: hidden;
+      }
 
-    .section { margin-bottom: 28px; }
-    .section-title {
-      font-size: 14px;
-      color: #0f172a;
-      border-bottom: 2px solid #0f172a;
-      padding-bottom: 6px;
-      margin: 0 0 16px 0;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+      .header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
+      }
 
-    /* ─── Timeline ─── */
-    .timeline-entry {
-      margin-bottom: 20px;
-      padding-inline-start: 18px;
-      border-inline-start: 2px solid #e2e8f0;
-      position: relative;
-    }
-    .timeline-entry::before {
-      content: '';
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #0f172a;
-      border-radius: 50%;
-      top: 6px;
-    }
-    body.lang-en .timeline-entry::before { left: -5px; }
-    body.lang-fa .timeline-entry::before { right: -5px; }
+      .header-info {
+        flex: 1;
+      }
 
-    .timeline-entry .title {
-      font-size: 14px;
-      font-weight: 600;
-      margin: 0;
-      color: #1e293b;
-    }
-    .timeline-entry .sub {
-      font-size: 13px;
-      color: #64748b;
-      margin: 2px 0 0 0;
-    }
-    .timeline-entry .date {
-      font-size: 11px;
-      color: #94a3b8;
-      font-weight: 500;
-    }
-    .timeline-entry .desc {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #475569;
-      margin: 6px 0 0;
-      padding-inline-start: 14px;
-    }
-    .timeline-entry .desc li { margin-bottom: 2px; }
+      .header h1 {
+        font-size: 32px;
+        margin: 0 0 6px 0;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
 
-    .summary-text {
-      font-size: 13px;
-      line-height: 1.7;
-      color: #475569;
-      margin: 0;
-      border-inline-start: 3px solid #0f172a;
-      padding-inline-start: 14px;
-    }
+      .header h2 {
+        font-size: 14px;
+        margin: 0;
+        font-weight: 400;
+        color: #93c5fd;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
 
-    /* ─── Right Column ─── */
-    .right-col .section { margin-bottom: 24px; }
-    .right-col .section-title {
-      font-size: 13px;
-      border-bottom-width: 1.5px;
-    }
+      .header-contact {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        font-size: 12px;
+        color: #cbd5e1;
+      }
 
-    .skill-block { margin-bottom: 14px; }
-    .skill-block:last-child { margin-bottom: 0; }
-    .skill-block h4 {
-      margin: 0 0 6px 0;
-      font-size: 12px;
-      color: #334155;
-      font-weight: 600;
-    }
-    .skill-block p {
-      margin: 0;
-      font-size: 12px;
-      color: #64748b;
-      line-height: 1.6;
-    }
+      .header-contact .item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-    .lang-entry {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      margin-bottom: 8px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .lang-entry .level {
-      color: #94a3b8;
-      font-size: 12px;
-    }
-  </style>
+      .header-contact .ic {
+        color: #60a5fa;
+        width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header-contact .ic svg {
+        display: block;
+      }
+
+      .main-body {
+        padding: 38px 50px 50px;
+        display: grid;
+        grid-template-columns: 1fr 290px;
+        gap: 40px;
+      }
+
+      .section {
+        margin-bottom: 28px;
+      }
+
+      .section-title {
+        font-size: 14px;
+        color: #0f172a;
+        border-bottom: 2px solid #0f172a;
+        padding-bottom: 8px;
+        margin: 0 0 16px 0;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .section-title::before {
+        content: '';
+        width: 4px;
+        height: 16px;
+        background: #0f172a;
+        border-radius: 2px;
+      }
+
+      .timeline-entry {
+        margin-bottom: 20px;
+        padding-inline-start: 20px;
+        border-inline-start: 2px solid #e2e8f0;
+        position: relative;
+      }
+
+      .timeline-entry::before {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #0f172a;
+        border-radius: 50%;
+        top: 6px;
+        border: 2px solid white;
+        box-shadow: 0 0 0 2px #0f172a;
+      }
+
+      body.lang-en .timeline-entry::before {
+        left: -6px;
+      }
+
+      body.lang-fa .timeline-entry::before {
+        right: -6px;
+      }
+
+      .timeline-entry .title {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
+        color: #1e293b;
+      }
+
+      .timeline-entry .sub {
+        font-size: 13px;
+        color: #3b82f6;
+        margin: 2px 0 0 0;
+        font-weight: 500;
+      }
+
+      .timeline-entry .date {
+        font-size: 11px;
+        color: #64748b;
+        font-weight: 500;
+        background: #f1f5f9;
+        padding: 2px 10px;
+        border-radius: 10px;
+        display: inline-block;
+        margin-top: 4px;
+      }
+
+      .timeline-entry .desc {
+        font-size: 12.5px;
+        line-height: 1.6;
+        color: #475569;
+        margin: 8px 0 0;
+        padding-inline-start: 14px;
+      }
+
+      .timeline-entry .desc li {
+        margin-bottom: 3px;
+      }
+
+      .summary-text {
+        font-size: 13px;
+        line-height: 1.7;
+        color: #475569;
+        margin: 0;
+        border-inline-start: 3px solid #0f172a;
+        padding-inline-start: 16px;
+        background: #f8fafc;
+        padding: 14px 16px;
+        border-radius: 0 6px 6px 0;
+      }
+
+      .right-col .section {
+        margin-bottom: 24px;
+      }
+
+      .right-col .section-title {
+        font-size: 13px;
+        border-bottom-color: #cbd5e1;
+        color: #334155;
+      }
+
+      .right-col .section-title::before {
+        background: #334155;
+      }
+
+      .skill-block {
+        margin-bottom: 14px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .skill-block:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .skill-block h4 {
+        margin: 0 0 6px 0;
+        font-size: 12px;
+        color: #1e293b;
+        font-weight: 600;
+      }
+
+      .skill-block p {
+        margin: 0;
+        font-size: 12px;
+        color: #64748b;
+        line-height: 1.6;
+      }
+
+      .lang-entry {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+      }
+
+      .lang-entry:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .lang-entry .level {
+        color: #3b82f6;
+        font-size: 11px;
+        background: #eff6ff;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+    </style>
 </head>
+
 <body class="lang-<%= data.language %>">
   <div class="page professional-resume">
     <div class="header">
       <div class="header-info">
-        <h1><%= data.fullName || '' %></h1>
-        <h2><%= data.jobTitle || '' %></h2>
+        <h1>
+          <%= data.fullName || '' %>
+        </h1>
+        <h2>
+          <%= data.jobTitle || '' %>
+        </h2>
       </div>
       <div class="header-contact">
-        <% if (data.email) { %><span class="item"><span class="ic"><%- icon('email') %></span> <%= data.email %></span><% } %>
-        <% if (data.phone) { %><span class="item"><span class="ic"><%- icon('phone') %></span> <span dir="ltr"><%= data.phone %></span></span><% } %>
-        <% if (data.location) { %><span class="item"><span class="ic"><%- icon('location') %></span> <%= data.location %></span><% } %>
-        <% if (data.socialLinks && data.socialLinks.length > 0) { data.socialLinks.forEach(link => { %>
-          <span class="item"><span class="ic"><%- icon(link.name) %></span> <%= link.url %></span>
-        <% }) } %>
+        <% if (data.email) { %>
+          <span class="item"><span class="ic"><%- icon('email') %></span>
+            <%= data.email %>
+          </span>
+          <% } %>
+            <% if (data.phone) { %>
+              <span class="item"><span class="ic"><%- icon('phone') %></span> <span dir="ltr">
+                  <%= data.phone %>
+                </span></span>
+              <% } %>
+                <% if (data.location) { %>
+                  <span class="item"><span class="ic"><%- icon('location') %></span>
+                    <%= data.location %>
+                  </span>
+                  <% } %>
+                    <% if (data.socialLinks && data.socialLinks.length> 0) { data.socialLinks.forEach(link => { %>
+                      <span class="item"><span class="ic"><%- icon(link.name) %></span>
+                        <%= link.url %>
+                      </span>
+                      <% }) } %>
       </div>
     </div>
-
     <div class="main-body">
       <div class="left-col">
         <% if (data.summary) { %>
-        <div class="section">
-          <h3 class="section-title"><%= data.language === 'en' ? 'Profile' : 'پروفایل' %></h3>
-          <p class="summary-text"><%= data.summary %></p>
-        </div>
-        <% } %>
-
-        <% if (data.experience && data.experience.length > 0) { %>
-        <div class="section">
-          <h3 class="section-title"><%= data.language === 'en' ? 'Experience' : 'سوابق کاری' %></h3>
-          <% data.experience.forEach(exp => { %>
-            <div class="timeline-entry">
-              <p class="title"><%= exp.title %></p>
-              <p class="sub"><%= exp.company %></p>
-              <span class="date"><%= exp.date %></span>
-              <ul class="desc">
-                <% (exp.descriptions || []).forEach(desc => { %><li><%= desc %></li><% }) %>
-              </ul>
-            </div>
-          <% }) %>
-        </div>
-        <% } %>
-
-        <% if (data.projects && data.projects.length > 0) { %>
-        <div class="section">
-          <h3 class="section-title"><%= data.language === 'en' ? 'Projects' : 'پروژه‌ها' %></h3>
-          <% data.projects.forEach(proj => { %>
-            <div class="timeline-entry">
-              <p class="title"><%= proj.name %></p>
-              <p class="sub"><%= proj.role %><% if (proj.techStack) { %> · <%= proj.techStack %><% } %></p>
-              <ul class="desc">
-                <% (proj.descriptions || []).forEach(desc => { %><li><%= desc %></li><% }) %>
-              </ul>
-            </div>
-          <% }) %>
-        </div>
-        <% } %>
+          <div class="section">
+            <h3 class="section-title">
+              <%= data.language==='en' ? 'Profile' : 'پروفایل' %>
+            </h3>
+            <p class="summary-text">
+              <%= data.summary %>
+            </p>
+          </div>
+          <% } %>
+            <% if (data.experience && data.experience.length> 0) { %>
+              <div class="section">
+                <h3 class="section-title">
+                  <%= data.language==='en' ? 'Experience' : 'سوابق کاری' %>
+                </h3>
+                <% data.experience.forEach(exp=> { %>
+                  <div class="timeline-entry">
+                    <p class="title">
+                      <%= exp.title %>
+                    </p>
+                    <p class="sub">
+                      <%= exp.company %>
+                    </p>
+                    <span class="date">
+                      <%= exp.date %>
+                    </span>
+                    <ul class="desc">
+                      <% (exp.descriptions || []).forEach(desc=> { %>
+                        <li>
+                          <%= desc %>
+                        </li>
+                        <% }) %>
+                    </ul>
+                  </div>
+                  <% }) %>
+              </div>
+              <% } %>
+                <% if (data.projects && data.projects.length> 0) { %>
+                  <div class="section">
+                    <h3 class="section-title">
+                      <%= data.language==='en' ? 'Projects' : 'پروژه‌ها' %>
+                    </h3>
+                    <% data.projects.forEach(proj=> { %>
+                      <div class="timeline-entry">
+                        <p class="title">
+                          <%= proj.name %>
+                        </p>
+                        <p class="sub">
+                          <%= proj.role %>
+                            <% if (proj.techStack) { %> · <%= proj.techStack %>
+                                <% } %>
+                        </p>
+                        <ul class="desc">
+                          <% (proj.descriptions || []).forEach(desc=> { %>
+                            <li>
+                              <%= desc %>
+                            </li>
+                            <% }) %>
+                        </ul>
+                      </div>
+                      <% }) %>
+                  </div>
+                  <% } %>
       </div>
-
       <div class="right-col">
-        <% if (data.education && data.education.length > 0) { %>
-        <div class="section">
-          <h3 class="section-title"><%= data.language === 'en' ? 'Education' : 'تحصیلات' %></h3>
-          <% data.education.forEach(edu => { %>
-            <div class="timeline-entry">
-              <p class="title"><%= edu.degree %></p>
-              <p class="sub"><%= edu.university %></p>
-              <span class="date"><%= edu.date %></span>
-            </div>
-          <% }) %>
-        </div>
+        <% if (data.education && data.education.length> 0) { %>
+          <div class="section">
+            <h3 class="section-title">
+              <%= data.language==='en' ? 'Education' : 'تحصیلات' %>
+            </h3>
+            <% data.education.forEach(edu=> { %>
+              <div class="timeline-entry">
+                <p class="title">
+                  <%= edu.degree %>
+                </p>
+                <p class="sub">
+                  <%= edu.university %>
+                </p>
+                <span class="date">
+                  <%= edu.date %>
+                </span>
+              </div>
+              <% }) %>
+          </div>
+          <% } %>
+            <% if (data.skills && data.skills.length> 0) { %>
+              <div class="section">
+                <h3 class="section-title">
+                  <%= data.language==='en' ? 'Skills' : 'مهارت‌ها' %>
+                </h3>
+                <% data.skills.forEach(skillGroup=> { %>
+                  <div class="skill-block">
+                    <h4>
+                      <%= skillGroup.category %>
+                    </h4>
+                    <p>
+                      <%= skillGroup.items.join(' · ') %></p>
+              </div>
+            <% }) %>
+          </div>
         <% } %>
-
-        <% if (data.skills && data.skills.length > 0) { %>
-        <div class="section">
-          <h3 class="section-title"><%= data.language === 'en' ? 'Skills' : 'مهارت‌ها' %></h3>
-          <% data.skills.forEach(skillGroup => { %>
-            <div class="skill-block">
-              <h4><%= skillGroup.category %></h4>
-              <p><%= skillGroup.items.join(' · ') %></p>
-            </div>
-          <% }) %>
-        </div>
-        <% } %>
-
         <% if (data.knownLanguages && data.knownLanguages.length > 0) { %>
-        <div class="section">
-          <h3 class="section-title"><%= data.language === 'en' ? 'Languages' : 'زبان‌ها' %></h3>
-          <% data.knownLanguages.forEach(lang => { %>
-            <div class="lang-entry">
-              <span><%= lang.name %></span>
-              <span class="level"><%= lang.level %></span>
-            </div>
-          <% }) %>
-        </div>
-        <% } %>
+          <div class="section">
+            <h3 class="section-title"><%= data.language === 'en' ? 'Languages' : 'زبان‌ها' %>
+                        </h3>
+                        <% data.knownLanguages.forEach(lang=> { %>
+                          <div class="lang-entry">
+                            <span>
+                              <%= lang.name %>
+                            </span>
+                            <span class="level">
+                              <%= lang.level %>
+                            </span>
+                          </div>
+                          <% }) %>
+                  </div>
+                  <% } %>
+              </div>
       </div>
     </div>
-  </div>
 </body>
+
 </html>

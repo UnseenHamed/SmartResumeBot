@@ -1,82 +1,276 @@
 <style>
-/* ─── Local Font Faces (Base64 Encoded for Puppeteer) ─── */
-@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Light"] %>') format('woff2'); font-weight: 300; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Regular"] %>') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Medium"] %>') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-SemiBold"] %>') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
-@font-face { font-family: 'Vazirmatn'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Bold"] %>') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+  /* ─── Local Font Faces (Base64 Encoded for Puppeteer) ─── */
+  @font-face {
+    font-family: 'Vazirmatn';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Light"] %>') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: block;
+  }
 
-@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Light"] %>') format('woff2'); font-weight: 300; font-style: normal; font-display: block; }
-@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Regular"] %>') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
-@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-SemiBold"] %>') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
-@font-face { font-family: 'Poppins'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Bold"] %>') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+  @font-face {
+    font-family: 'Vazirmatn';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Regular"] %>') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
 
-@font-face { font-family: 'Lexend Deca'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-Regular"] %>') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
-@font-face { font-family: 'Lexend Deca'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-SemiBold"] %>') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
-@font-face { font-family: 'Lexend Deca'; src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-Bold"] %>') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+  @font-face {
+    font-family: 'Vazirmatn';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Medium"] %>') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: block;
+  }
 
-/* ─── Design Tokens ─── */
-:root {
-  --font-en-heading: 'Lexend Deca', sans-serif;
-  --font-en-body: 'Poppins', sans-serif;
-  --font-fa: 'Vazirmatn', sans-serif;
-  
-  --primary-color: #2563eb;
-  --secondary-color: #1e40af;
-  --text-dark: #1f2937;
-  --text-light: #6b7280;
-  --bg-color: #ffffff;
-  --bg-alt: #f3f4f6;
-  --border-color: #e5e7eb;
-}
+  @font-face {
+    font-family: 'Vazirmatn';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-SemiBold"] %>') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: block;
+  }
 
-/* ─── Base Reset ─── */
-* { box-sizing: border-box; }
+  @font-face {
+    font-family: 'Vazirmatn';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Vazirmatn-Bold"] %>') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+  }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--bg-color);
-  color: var(--text-dark);
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
+  @font-face {
+    font-family: 'Poppins';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Light"] %>') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: block;
+  }
 
-body.lang-en {
-  font-family: var(--font-en-body);
-  direction: ltr;
-}
-body.lang-en h1, body.lang-en h2, body.lang-en h3, body.lang-en h4 {
-  font-family: var(--font-en-heading);
-}
+  @font-face {
+    font-family: 'Poppins';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Regular"] %>') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
 
-body.lang-fa {
-  font-family: var(--font-fa);
-  direction: rtl;
-}
-body.lang-fa h1, body.lang-fa h2, body.lang-fa h3, body.lang-fa h4 {
-  font-family: var(--font-fa);
-}
+  @font-face {
+    font-family: 'Poppins';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-SemiBold"] %>') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: block;
+  }
 
-.page {
-  width: 210mm;
-  min-height: 297mm;
-  margin: 0 auto;
-  background: white;
-}
+  @font-face {
+    font-family: 'Poppins';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["Poppins-Bold"] %>') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+  }
 
-/* ─── Utility Classes ─── */
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.text-primary { color: var(--primary-color); }
-.text-secondary { color: var(--text-light); }
-.mb-1 { margin-bottom: 0.25rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-4 { margin-bottom: 1rem; }
-.mt-4 { margin-top: 1rem; }
-.w-full { width: 100%; }
+  @font-face {
+    font-family: 'Lexend Deca';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-Regular"] %>') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Lexend Deca';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-SemiBold"] %>') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Lexend Deca';
+    src: url('data:font/woff2;charset=utf-8;base64,<%- fontBase64["LexendDeca-Bold"] %>') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+  }
+
+  /* ─── Design Tokens ─── */
+  :root {
+    --font-en-heading: 'Lexend Deca', sans-serif;
+    --font-en-body: 'Poppins', sans-serif;
+    --font-fa: 'Vazirmatn', sans-serif;
+
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --bg-color: #ffffff;
+    --bg-alt: #f3f4f6;
+    --border-color: #e5e7eb;
+  }
+
+  /* ─── Base Reset ─── */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body.lang-en {
+    font-family: var(--font-en-body);
+    direction: ltr;
+  }
+
+  body.lang-en h1,
+  body.lang-en h2,
+  body.lang-en h3,
+  body.lang-en h4 {
+    font-family: var(--font-en-heading);
+  }
+
+  body.lang-fa {
+    font-family: var(--font-fa);
+    direction: rtl;
+  }
+
+  body.lang-fa h1,
+  body.lang-fa h2,
+  body.lang-fa h3,
+  body.lang-fa h4 {
+    font-family: var(--font-fa);
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    background: white;
+  }
+
+  /* ─── Multi-Page Print System ─── */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  @media print {
+
+    html,
+    body {
+      width: 210mm;
+      height: auto;
+    }
+
+    .page {
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    /* Prevent breaking inside these elements */
+    .timeline-item,
+    .timeline-entry,
+    .entry,
+    .skill-group,
+    .skill-block,
+    .lang-entry,
+    .contact-item,
+    .section,
+    .summary-box,
+    tr,
+    li {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Section titles should stay with their content */
+    .main-section-title,
+    .section-title,
+    .section-label {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    /* Keep headers with following content */
+    h1,
+    h2,
+    h3,
+    h4 {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+  }
+
+  /* ─── Utility Classes ─── */
+  .flex {
+    display: flex;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  .text-primary {
+    color: var(--primary-color);
+  }
+
+  .text-secondary {
+    color: var(--text-light);
+  }
+
+  .mb-1 {
+    margin-bottom: 0.25rem;
+  }
+
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+
+  .mt-4 {
+    margin-top: 1rem;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  /* ─── Page Break Helpers ─── */
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 </style>
-
-
