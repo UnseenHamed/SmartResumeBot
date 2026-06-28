@@ -1,29 +1,37 @@
 import puppeteer from 'puppeteer';
 import * as ejs from 'ejs';
 import * as path from 'path';
+import * as fs from 'fs';
 import { ResumeData } from '../bot/helpers/format';
+
+// --- Global Font Cache to save Memory on Render ---
+const fontNames = [
+  'Vazirmatn-Light', 'Vazirmatn-Regular', 'Vazirmatn-Medium', 'Vazirmatn-SemiBold', 'Vazirmatn-Bold',
+  'Poppins-Light', 'Poppins-Regular', 'Poppins-SemiBold', 'Poppins-Bold',
+  'LexendDeca-Regular', 'LexendDeca-SemiBold', 'LexendDeca-Bold'
+];
+const fontBase64Cache: Record<string, string> = {};
+
+function loadFonts() {
+  if (Object.keys(fontBase64Cache).length > 0) return fontBase64Cache;
+  for (const font of fontNames) {
+    try {
+      const fontPathOnDisk = path.join(__dirname, `../templates/fonts/${font}.woff2`);
+      fontBase64Cache[font] = fs.readFileSync(fontPathOnDisk).toString('base64');
+    } catch (e) {
+      console.error(`Failed to load font ${font}`, e);
+      fontBase64Cache[font] = '';
+    }
+  }
+  return fontBase64Cache;
+}
 
 export async function generatePdf(data: ResumeData): Promise<Buffer> {
   const templateName = data.template || 'modern';
   const templatePath = path.join(__dirname, `../templates/${templateName}.ejs`);
-  // Read fonts as base64 to embed directly in HTML (foolproof for Puppeteer)
-  const fs = require('fs');
-  const fontNames = [
-    'Vazirmatn-Light', 'Vazirmatn-Regular', 'Vazirmatn-Medium', 'Vazirmatn-SemiBold', 'Vazirmatn-Bold',
-    'Poppins-Light', 'Poppins-Regular', 'Poppins-SemiBold', 'Poppins-Bold',
-    'LexendDeca-Regular', 'LexendDeca-SemiBold', 'LexendDeca-Bold'
-  ];
-
-  const fontBase64: Record<string, string> = {};
-  for (const font of fontNames) {
-    try {
-      const fontPathOnDisk = path.join(__dirname, `../templates/fonts/${font}.woff2`);
-      fontBase64[font] = fs.readFileSync(fontPathOnDisk).toString('base64');
-    } catch (e) {
-      console.error(`Failed to load font ${font}`, e);
-      fontBase64[font] = ''; // fallback
-    }
-  }
+  
+  // Get cached fonts
+  const fontBase64 = loadFonts();
 
   const icons: Record<string, string> = {
     email: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
@@ -53,6 +61,7 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
       '--disable-dev-shm-usage',
       '--disable-gpu',
       '--no-zygote',
+      '--single-process',
       '--font-render-hinting=none',
       '--allow-file-access-from-files',
       '--disable-features=site-per-process',
@@ -78,8 +87,11 @@ export async function generatePdf(data: ResumeData): Promise<Buffer> {
       timeout: 60000
     });
 
-    // Ensure all fonts are loaded before generating PDF
-    await page.evaluateHandle('document.fonts.ready');
+    // Ensure all fonts are loaded before generating PDF (with a 5s fallback timeout to prevent hanging)
+    await page.evaluate(() => Promise.race([
+      document.fonts.ready,
+      new Promise(resolve => setTimeout(resolve, 5000))
+    ]));
 
     // Emulate print media for better PDF rendering
     await page.emulateMediaType('print');
