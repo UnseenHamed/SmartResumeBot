@@ -16,7 +16,11 @@ function loadFonts() {
   if (Object.keys(fontBase64Cache).length > 0) return fontBase64Cache;
   for (const font of fontNames) {
     try {
-      const fontPathOnDisk = path.join(__dirname, `../templates/fonts/${font}.woff2`);
+      let fontPathOnDisk = path.join(__dirname, `../templates/fonts/${font}.woff2`);
+      if (!fs.existsSync(fontPathOnDisk)) {
+        // Fallback to process.cwd() in case we are running from compiled dist/ folder
+        fontPathOnDisk = path.join(process.cwd(), `src/templates/fonts/${font}.woff2`);
+      }
       fontBase64Cache[font] = fs.readFileSync(fontPathOnDisk).toString('base64');
     } catch (e) {
       console.error(`Failed to load font ${font}`, e);
